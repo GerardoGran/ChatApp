@@ -32,18 +32,19 @@ export const ChatForm = ({ socket, addMessage }: ChatFormProps) => {
   };
 
   return (
-    <Grid container spacing={1}>
+    <Grid className="container" container spacing={1}>
       <Grid item lg={10}>
         <TextField
+          className="fill"
           onKeyDown={enterPress}
           value={messageText}
           onChange={(e) => setMessageText(e.target.value)}
           id="chat-field"
-          variant="standard"
+          variant="outlined"
         />
       </Grid>
       <Grid item lg={2}>
-        <Button onClick={sendMessage} variant="outlined">
+        <Button className="fill" onClick={sendMessage} variant="outlined">
           SEND
         </Button>
       </Grid>

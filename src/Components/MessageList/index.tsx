@@ -10,7 +10,7 @@ type MessageListProps = {
 
 export const MessageList = ({ messages }: MessageListProps) => {
   return (
-    <div>
+    <div className="container">
       {messages.map((message, id) => {
         return (
           <MessageBubble

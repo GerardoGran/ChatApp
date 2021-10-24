@@ -10,5 +10,9 @@ type MessageProps = {
 export const MessageBubble = ({ received, message }: MessageProps) => {
   const msgType: string = received ? "received-text" : "sent-text";
 
-  return <p className={msgType}>{message}</p>;
+  return (
+    <div className={msgType}>
+      <p className={msgType}>{message}</p>
+    </div>
+  );
 };
