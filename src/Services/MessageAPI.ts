@@ -7,35 +7,47 @@
 
 // async retrieveSA() {
 //   try{
-//     const data = await 
+//     const data = await
 //   } catch (err) {
 //     console.log(err);
 //     return err.message
 // }
 // }
 
-
 // export default MessageAPI;
 
-import axios from 'axios'
-const server = 'http://localhost:2021/enviar_mensaje'
+import axios from "axios";
+const server = "http://localhost:2021";
 
 export class MessageAPI {
-
-    async sendMessage(text: any) {
-        try{
-            const data = await  axios.post(`${server}`, text, {
-              headers : {
-                  'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-              }
-          })
-            console.log(data)
-            return data;
-        }catch (err) {
-            console.log(err);
-            return err
-        }
+  async sendMessage(data: any) {
+    try {
+      const res = await axios.post(`${server}/enviar_mensaje`, data, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        },
+      });
+      console.log(res);
+      return res;
+    } catch (err) {
+      console.log(err);
+      return err;
     }
-};
+  }
+  async setConnection(ip: string) {
+    try {
+      const data = await axios.get(`${server}/conectar?host=${ip}`, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        },
+      });
+      console.log(data);
+      return data;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+}
 
 export default new MessageAPI();
