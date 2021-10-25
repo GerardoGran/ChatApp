@@ -1,22 +1,24 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import MessageAPI from "../../Services/MessageAPI";
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(true);
+  const [ip, setIp] = React.useState("");
 
   const handleClose = () => {
+    MessageAPI.setConnection(ip);
     setOpen(false);
   };
 
   const handleChange = (e: any) => {
-    setOpen(e.target.value)
-    console.log(open)
+    setIp(e.target.value);
+    console.log(open);
   };
 
   return (
@@ -26,6 +28,7 @@ export default function FormDialog() {
         <DialogContent>
           <TextField
             autoFocus
+            value={ip}
             margin="dense"
             id="name"
             label="IP Address"

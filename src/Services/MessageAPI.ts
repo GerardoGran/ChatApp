@@ -24,7 +24,7 @@ export class MessageAPI {
     try {
       const res = await axios.post(`${server}/enviar_mensaje`, data, {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          "Content-Type": "application/json; charset=UTF-8",
         },
       });
       console.log(res);
