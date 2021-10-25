@@ -21,6 +21,7 @@ export const ChatWindow = ({ socket }: ChatWindowProps) => {
         message: msg,
       } as Message;
       setMessages([...messages, newMessage]);
+      console.table(messages);
     });
   }, [messages, socket]);
 

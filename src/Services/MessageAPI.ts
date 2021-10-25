@@ -27,7 +27,6 @@ export class MessageAPI {
           "Content-Type": "application/json; charset=UTF-8",
         },
       });
-      console.log(res);
       return res;
     } catch (err) {
       console.log(err);

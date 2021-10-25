@@ -3,7 +3,6 @@ import TextField from "@mui/material/TextField";
 import { Button, Grid } from "@mui/material";
 import { Socket } from "socket.io-client";
 import MessageAPI from "../../Services/MessageAPI";
-import Message from "../../Types/Message";
 
 import "./index.css";
 
@@ -17,7 +16,8 @@ export const ChatForm = ({ socket, addMessage }: ChatFormProps) => {
 
   const sendMessage = () => {
     if (messageText !== "" && messageText !== undefined) {
-      let data = { function: "1", data: messageText };
+      let data = JSON.stringify({ function: "1", data: messageText });
+      console.log(data);
 
       MessageAPI.sendMessage(data).then((res) => {
         console.log(res);
