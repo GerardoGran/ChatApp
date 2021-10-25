@@ -3,6 +3,8 @@ import TextField from "@mui/material/TextField";
 import { Button, Grid } from "@mui/material";
 import { Socket } from "socket.io-client";
 
+import MessageAPI from "../../Services/MessageAPI";
+
 import "./index.css";
 
 type ChatFormProps = {
@@ -15,10 +17,11 @@ export const ChatForm = ({ socket, addMessage }: ChatFormProps) => {
 
   const sendMessage = () => {
     if (messageText !== "" && messageText !== undefined) {
-      setMessageText("");
-      // Send message through socket.io
-      socket.emit("Message", messageText);
+      // Send message via post
+      MessageAPI.post("/enviar_mensaje", { function: 1, data: messageText });
       console.log(`Sending message ${messageText}`);
+
+      setMessageText("");
 
       // Return message text for displaying on client
       addMessage(messageText);

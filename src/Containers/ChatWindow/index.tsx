@@ -14,14 +14,13 @@ export const ChatWindow = ({ socket }: ChatWindowProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
-    socket.on("Message", (data) => {
-      console.log(data);
-      let temp: Message[] = messages;
-      temp.push({
+    socket.on("Mensaje ASCP", (msg: string) => {
+      console.log(`Received Message: ${msg}`);
+      const newMessage: Message = {
         received: true,
-        message: data,
-      } as Message);
-      setMessages([...temp]);
+        message: msg,
+      } as Message;
+      setMessages([...messages, newMessage]);
     });
   }, [messages, socket]);
 
@@ -32,7 +31,6 @@ export const ChatWindow = ({ socket }: ChatWindowProps) => {
     } as Message;
 
     setMessages([...messages, newMessage]);
-    console.table(messages);
   };
 
   return (

@@ -14,6 +14,7 @@ export const MessageList = ({ messages }: MessageListProps) => {
       {messages.map((message, id) => {
         return (
           <MessageBubble
+            key={id}
             received={message.received}
             message={message.message}
           />
