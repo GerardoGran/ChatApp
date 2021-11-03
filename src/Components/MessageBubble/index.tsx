@@ -7,6 +7,7 @@ type MessageProps = {
   message: string;
 };
 
+
 export const MessageBubble = ({ received, message }: MessageProps) => {
   const msgType: string = received ? "received-text" : "sent-text";
 
