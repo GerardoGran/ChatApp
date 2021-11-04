@@ -6,7 +6,7 @@ import MessageAPI from "../../Services/MessageAPI";
 import "./index.css";
 import { io, Socket } from "socket.io-client";
 import { MessageBubble } from "../../Components/MessageBubble";
-const ENDPOINT = "172.16.112.43:2021";
+const ENDPOINT = "10.34.7.54:2021";
 
 type ChatWindowProps = {
   messages: object;
@@ -16,23 +16,25 @@ const socket: Socket = io(ENDPOINT);
 
 export const ChatWindow = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [sentText, setSentText] = useState<string>();
+  const [sentMessage, setSentMessage] = useState<boolean>(false);
   const [messageText, setMessageText] = useState("");
-  const [pressed, setPressed] = useState(false)
-  
+
   useEffect(() => {
     socket.on("Mensaje ASCP", (msg: string) => {
       console.log(`Received Message: ${msg}`);
-      sendMessage();
-      if (pressed) {
+      console.table(sentMessage);
+      if (msg === sentText && sentMessage) {
         const newMessage: Message = {
           received: false,
           // received: true,
           message: msg,
         } as Message;
         setMessages([...messages, newMessage]);
+        setSentMessage(false);
         console.table(messages);
-
       } else {
+        console.log(`RECEIVED ${msg}`);
         const newMessage: Message = {
           received: true,
           // received: false,
@@ -40,23 +42,19 @@ export const ChatWindow = () => {
         } as Message;
         setMessages([...messages, newMessage]);
         console.table(messages);
-
       }
     });
-  } , [messages]);
+  }, [messages, sentMessage, sentText]);
 
   const sendMessage = () => {
-
     if (messageText !== "" && messageText !== undefined) {
-      setPressed(true)
-
+      setSentMessage(true);
+      setSentText(messageText);
       let data = JSON.stringify({ function: "1", data: messageText });
       console.log(data);
 
       MessageAPI.sendMessage(data).then((res) => {
         console.log(res);
-        setPressed(false)
-
       });
 
       setMessageText("");
@@ -67,7 +65,6 @@ export const ChatWindow = () => {
 
       // setMessages([...messages, newMessage]);
     }
-
   };
 
   const enterPress = (e: any) => {
