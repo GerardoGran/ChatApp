@@ -35,11 +35,14 @@ export class MessageAPI {
   }
   async setConnection(ip: string) {
     try {
-      const data = await axios.get(`${server}/conectar?host=http://${ip}:2021`, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        },
-      });
+      const data = await axios.get(
+        `${server}/conectar?host=http://${ip}:2021`,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          },
+        }
+      );
       return data;
     } catch (err) {
       console.log(err);

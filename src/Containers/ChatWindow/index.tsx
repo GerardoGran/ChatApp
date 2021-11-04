@@ -6,7 +6,7 @@ import MessageAPI from "../../Services/MessageAPI";
 import "./index.css";
 import { io, Socket } from "socket.io-client";
 import { MessageBubble } from "../../Components/MessageBubble";
-const ENDPOINT = "10.34.7.54:2021";
+const ENDPOINT = "http://localhost:2021";
 
 type ChatWindowProps = {
   messages: object;
@@ -21,9 +21,9 @@ export const ChatWindow = () => {
   const [messageText, setMessageText] = useState("");
 
   useEffect(() => {
-    socket.on("Mensaje ASCP", (msg: string) => {
+    socket.on("Mensaje ASCP", (msgObj: any) => {
+      const msg = msgObj.data;
       console.log(`Received Message: ${msg}`);
-      console.table(sentMessage);
       if (msg === sentText && sentMessage) {
         const newMessage: Message = {
           received: false,
@@ -32,7 +32,6 @@ export const ChatWindow = () => {
         } as Message;
         setMessages([...messages, newMessage]);
         setSentMessage(false);
-        console.table(messages);
       } else {
         console.log(`RECEIVED ${msg}`);
         const newMessage: Message = {
@@ -41,7 +40,6 @@ export const ChatWindow = () => {
           message: msg,
         } as Message;
         setMessages([...messages, newMessage]);
-        console.table(messages);
       }
     });
   }, [messages, sentMessage, sentText]);
@@ -51,7 +49,6 @@ export const ChatWindow = () => {
       setSentMessage(true);
       setSentText(messageText);
       let data = JSON.stringify({ function: "1", data: messageText });
-      console.log(data);
 
       MessageAPI.sendMessage(data).then((res) => {
         console.log(res);
